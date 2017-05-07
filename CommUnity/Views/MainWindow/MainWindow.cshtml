@@ -6,17 +6,55 @@
     <div style="display: block; margin-left: auto;margin-right: auto;">
         <div class="row">
             <div class="col-4" style="position: relative;">
-                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @style = "min-width:70%; min-height: 300px;" })
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control", @style = "min-width:70%; min-height: 300px;" , @id ="text"})
             </div>
         </div>
         <div class="row" style="margin-top: 10px; position:relative">
             @Html.ActionLink("Administracja", "Create", "Travel", null, new { @class = "btn btn-default btn-large" })
             @Html.ActionLink("Statystyki", "Create", "Travel", null, new { @class = "btn btn-default btn-large" })
             @Html.ActionLink("Wyślij", "Create", "Travel", null, new { @class = "btn btn-success btn-large" })
+            <input type="button" value="Wyslij" onclick="sendDiscordNotification()"/>
         </div>
     </div>
        
 
 </div>
+
+<script type="text/javascript">
+
+    function sendDiscordNotification() {
+        var discordHookUrl = "https://discordapp.com/api/webhooks/310811550086725642/tdYcphQ8QZla2YIq18g8nS36IcUYGv2ND8nhSiHyHYqR9sft-qZdT6OUhQOV9bGJMVot"; //Adres webhooka (generowany w Discordzie)
+        var hookurl = discordHookUrl + "/slack"; //Adres wygenerowany przez Discorda trzeba uzupełnić końcówką "/slack". 
+        var msgJson;
+        var textValue = document.querySelector('#text').value;
+        if (textValue == "")
+        {
+            textValue = "Puste ogłoszenie";
+        }
+        msgJson = {
+            "attachments": [{
+                "text": textValue +  " \n Wysłane za pomocą CommUnity",
+                "color": "#3edda1"
+            }]
+        }
+
+        post(hookurl, msgJson);
+    }
+
+
+    function post(url, jsonmsg) {
+        xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        var data = JSON.stringify(jsonmsg);
+        xhr.send(data);
+        xhr.onreadystatechange = function () {
+            if (this.status != 200) {
+                alert(this.responseText);
+            }
+        }
+    }
+   
+</script>
 
 
