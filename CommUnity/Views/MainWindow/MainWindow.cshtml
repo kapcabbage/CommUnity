@@ -12,8 +12,8 @@
         <div class="row" style="margin-top: 10px; position:relative">
             @Html.ActionLink("Administracja", "Create", "Travel", null, new { @class = "btn btn-default btn-large" })
             @Html.ActionLink("Statystyki", "Create", "Travel", null, new { @class = "btn btn-default btn-large" })
-            @Html.ActionLink("Wyślij", "Create", "Travel", null, new { @class = "btn btn-success btn-large" })
-            <input type="button" value="Wyslij" onclick="sendDiscordNotification()"/>
+        
+            <input type="button" value="Wyslij" onclick="sendDiscordNotification()"  class = "btn btn-success btn-large"/>
         </div>
     </div>
        
